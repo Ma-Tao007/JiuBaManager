@@ -14,7 +14,7 @@
 <body>
     <div class="content">
         <div class="form sign-in">
-       		<form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/login" id="from1" onsubmit="login()" method="post">
+       		<form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/login" id="from1" onsubmit="return login()" method="post">
 	            <h2>欢迎回来</h2>
 	            <label>
 	                <span>用户名</span>
@@ -107,8 +107,9 @@ document.querySelector('.img__btn').addEventListener('click', function() {
     function login(){
         if($("#username").val()=='' || $("#password").val()==''){
            alert("请输入用户名和密码")
-            return
+            return false
         }
+        return true
       /*  var role = $("input[name='role']:checked").val() 
        location.href=$("#contextPath").val()+'/login?username='+$("#username").val()+"&password="+$("#password").val() */
        /*  $.ajax({
