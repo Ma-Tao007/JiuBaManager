@@ -34,7 +34,7 @@ public class LoginController {
 	        subject.login(token);
 	
 	        if (subject.hasRole("admin")) {
-	            return "redirect:/admin/showStudent";
+	            return "redirect:/admin/showCourse";
 	        } else if (subject.hasRole("teacher")) {
 	            return "redirect:/teacher/showCourse";
 	        } else if (subject.hasRole("student")) {

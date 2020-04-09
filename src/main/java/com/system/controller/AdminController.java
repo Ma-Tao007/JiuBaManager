@@ -27,8 +27,8 @@ public class AdminController {
     @Resource(name = "teacherServiceImpl")
     private TeacherService teacherService;
 
-    @Resource(name = "courseServiceImpl")
-    private CourseService courseService;
+    @Resource(name = "goodsServiceImpl")
+    private GoodsService courseService;
 
     @Resource(name = "collegeServiceImpl")
     private CollegeService collegeService;
@@ -263,7 +263,7 @@ public class AdminController {
     @RequestMapping("/showCourse")
     public String showCourse(Model model, Integer page) throws Exception {
 
-        List<CourseCustom> list = null;
+        List<Goods> list = null;
         //页码对象
         PagingVO pagingVO = new PagingVO();
         //设置总页数
@@ -278,7 +278,7 @@ public class AdminController {
 
         model.addAttribute("courseList", list);
         model.addAttribute("pagingVO", pagingVO);
-
+        
         return "admin/showCourse";
 
     }
@@ -298,12 +298,12 @@ public class AdminController {
 
     // 添加课程信息处理
     @RequestMapping(value = "/addCourse", method = {RequestMethod.POST})
-    public String addCourse(CourseCustom courseCustom, Model model) throws Exception {
+    public String addCourse(Goods courseCustom, Model model) throws Exception {
 
         Boolean result = courseService.save(courseCustom);
 
         if (!result) {
-            model.addAttribute("message", "课程号重复");
+            model.addAttribute("message", "商品编码重复");
             return "error";
         }
 
@@ -312,13 +312,13 @@ public class AdminController {
         return "redirect:/admin/showCourse";
     }
 
-    // 修改教师信息页面显示
+    // 修改课程信息页面显示
     @RequestMapping(value = "/editCourse", method = {RequestMethod.GET})
     public String editCourseUI(Integer id, Model model) throws Exception {
         if (id == null) {
             return "redirect:/admin/showCourse";
         }
-        CourseCustom courseCustom = courseService.findById(id);
+        Goods courseCustom = courseService.findById(id);
         if (courseCustom == null) {
             throw new CustomException("未找到该课程");
         }
@@ -333,12 +333,12 @@ public class AdminController {
         return "admin/editCourse";
     }
 
-    // 修改教师信息页面处理
+    // 修改课程信息页面处理
     @RequestMapping(value = "/editCourse", method = {RequestMethod.POST})
-    public String editCourse(CourseCustom courseCustom) throws Exception {
-
-        courseService.upadteById(courseCustom.getCourseid(), courseCustom);
-
+    public String editCourse(Goods courseCustom) throws Exception {
+    	
+        courseService.upadteById(courseCustom.getId(), courseCustom);
+        	
         //重定向
         return "redirect:/admin/showCourse";
     }
@@ -359,8 +359,7 @@ public class AdminController {
     @RequestMapping(value = "selectCourse", method = {RequestMethod.POST})
     private String selectCourse(String findByName, Model model) throws Exception {
 
-        List<CourseCustom> list = courseService.findByName(findByName);
-
+        List<Goods> list = courseService.findByName(findByName);
         model.addAttribute("courseList", list);
         return "admin/showCourse";
     }
