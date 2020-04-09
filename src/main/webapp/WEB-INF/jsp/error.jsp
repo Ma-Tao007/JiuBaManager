@@ -8,6 +8,6 @@
 </head>
 <body>
     <h1>${message}</h1>
-    <a href="javascript:history.back(-1)">返回上一页</a>
+    <a href="javascript:history.back(-1) ">返回上一页</a>
 </body>
 </html>

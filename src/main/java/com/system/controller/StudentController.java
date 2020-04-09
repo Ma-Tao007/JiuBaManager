@@ -1,12 +1,14 @@
 package com.system.controller;
 
 import com.system.exception.CustomException;
+import com.system.mapper.SysuserMapper;
 import com.system.po.*;
 import com.system.service.CourseService;
 import com.system.service.SelectedCourseService;
 import com.system.service.StudentService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,25 +32,35 @@ public class StudentController {
 
     @Resource(name = "selectedCourseServiceImpl")
     private SelectedCourseService selectedCourseService;
+    @Autowired
+    private SysuserMapper sysuserMapper;
 
     @RequestMapping(value = "/showCourse")
     public String stuCourseShow(Model model, Integer page) throws Exception {
+    	
+    	//获取当前用户名
+        Subject subject = SecurityUtils.getSubject();
+        String username = (String) subject.getPrincipal();
+        Sysuser user = sysuserMapper.selectByUsername(username);
+        //通过用户名去找对象
+        
 
-        List<CourseCustom> list = null;
-        //页码对象
-        PagingVO pagingVO = new PagingVO();
-        //设置总页数
-        pagingVO.setTotalCount(courseService.getCountCouse());
-        if (page == null || page == 0) {
-            pagingVO.setToPageNo(1);
-            list = courseService.findByPaging(1);
-        } else {
-            pagingVO.setToPageNo(page);
-            list = courseService.findByPaging(page);
-        }
-
-        model.addAttribute("courseList", list);
-        model.addAttribute("pagingVO", pagingVO);
+//        List<CourseCustom> list = null;
+//        //页码对象
+//        PagingVO pagingVO = new PagingVO();
+//        //设置总页数
+//        pagingVO.setTotalCount(courseService.getCountCouse());
+//        if (page == null || page == 0) {
+//            pagingVO.setToPageNo(1);
+//            list = courseService.findByPaging(1);
+//        } else {
+//            pagingVO.setToPageNo(page);
+//            list = courseService.findByPaging(page);
+//        }
+//
+//        model.addAttribute("courseList", list);
+      model.addAttribute("user", user);
+    	
 
         return "student/showCourse";
     }
@@ -93,14 +105,19 @@ public class StudentController {
     // 已选课程
     @RequestMapping(value = "/selectedCourse")
     public String selectedCourse(Model model) throws Exception {
-        //获取当前用户名
+//        //获取当前用户名
+//        Subject subject = SecurityUtils.getSubject();
+//        StudentCustom studentCustom = studentService.findStudentAndSelectCourseListByName((String) subject.getPrincipal());
+//
+//        List<SelectedCourseCustom> list = studentCustom.getSelectedCourseList();
+//
+//        model.addAttribute("selectedCourseList", list);
+    	//获取当前用户名
         Subject subject = SecurityUtils.getSubject();
-        StudentCustom studentCustom = studentService.findStudentAndSelectCourseListByName((String) subject.getPrincipal());
-
-        List<SelectedCourseCustom> list = studentCustom.getSelectedCourseList();
-
-        model.addAttribute("selectedCourseList", list);
-
+        String username = (String) subject.getPrincipal();
+        Sysuser user = sysuserMapper.selectByUsername(username);
+        model.addAttribute("user", user);
+        
         return "student/selectCourse";
     }
 

@@ -29,12 +29,10 @@ public class GoodsServiceImpl implements GoodsService {
     private GoodsMapper courseMapper;
 
 
-    public void upadteById(Integer id, Goods courseCustom){
-    	try{
+    public void upadteById(Integer id, Goods courseCustom) throws Exception {
+    	
     		courseMapper.updateByPrimaryKey(courseCustom);
-    	}catch(Exception e){
-    		e.printStackTrace();
-    	}
+    	
         
     }
 
@@ -74,7 +72,7 @@ public class GoodsServiceImpl implements GoodsService {
 
     public List<Goods> findByName(String name) throws Exception {
   
-
+    	name = "%"+name+"%";
 
         List<Goods> list = courseMapper.selectByExample(name);
 

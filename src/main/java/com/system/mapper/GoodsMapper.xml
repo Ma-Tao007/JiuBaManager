@@ -38,7 +38,7 @@
    <select id="selectByExample"  resultType="Goods">
         select *
         from goods
-        where coursename like '%'#{name}'%'
+        where coursename like #{name}
     </select>
     
     <select id="getCountCourse"  resultType="java.lang.Integer">

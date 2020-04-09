@@ -193,4 +193,12 @@
       role = #{role,jdbcType=INTEGER}
     where userID = #{userid,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from userlogin
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
+  
 </mapper>

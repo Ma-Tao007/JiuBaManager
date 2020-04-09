@@ -28,4 +28,6 @@ public interface UserloginMapper {
     int updateByPrimaryKeySelective(Userlogin record);
 
     int updateByPrimaryKey(Userlogin record);
+
+	Userlogin selectByUsername(String username);
 }

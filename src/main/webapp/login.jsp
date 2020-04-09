@@ -14,7 +14,7 @@
 <body>
     <div class="content">
         <div class="form sign-in">
-       		<form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/login" id="from1" onsubmit="return login()" method="post">
+       		<form class="form-horizontal"  action="${pageContext.request.contextPath}/login" onsubmit="return login()" method="post">
 	            <h2>欢迎回来</h2>
 	            <label>
 	                <span>用户名</span>
@@ -47,16 +47,18 @@
                 </div>
             </div>
             <div class="form sign-up">
-                <h2>立即注册</h2>
-                <label>
-                    <span>用户名</span>
-                    <input class='input' type="text" id="rgusername" />
-                </label>
-                <label>
-                    <span>密码</span>
-                    <input class='input' type="password" id="rgpassword" />
-                </label>
-                <button type="button" class="submit" onclick="rigst()">注 册</button>
+	            <form class="form-horizontal"  action="${pageContext.request.contextPath}/regist"  onsubmit="return rigst()" method="post">
+	                <h2>立即注册</h2>
+	                <label>
+	                    <span>用户名</span>
+	                    <input class='input' type="text" id="rgusername" name='username' />
+	                </label>
+	                <label>
+	                    <span>密码</span>
+	                    <input class='input' type="password" id="rgpassword" name='password'/>
+	                </label>
+	                <button type="submit" class="submit">注 册</button>
+	            </form>
             </div>
         </div>
         <input hidden id='contextPath' value='${pageContext.request.contextPath}'>
@@ -67,42 +69,13 @@ document.querySelector('.img__btn').addEventListener('click', function() {
     document.querySelector('.content').classList.toggle('s--signup')
 })
     var contextPath = $("#contextPath").attr("src")
-    //頁面回车事件
-    // document.onkeyup = function (e) {
-    //     if (window.event)//如果window.event对象存在，就以此事件对象为准
-    //         e = window.event;
-    //     var code = e.charCode || e.keyCode;
-    //     if (code == 13) {
-    //         //此处编写用户敲回车后的代码
-    //         login()
-    //     }
-    // }
+
     function rigst(){
         if($("#rgusername").val()=='' || $("#rgpassword").val()==''){
-            setTips(false,"请输入用户名和密码",function(){
-
-            },800)
-            return
+        	 alert("请输入用户名和密码")
+             return false
         }
-        $.ajax({
-            url:contextPath+"login/rigst",
-            method:'post',
-            data:{'username':$("#rgusername").val(),'password':$("#rgpassword").val()},
-            success:function(res){
-                if(res.success){
-                    setTips(true,"注册成功",function(){
-                        $(".m--in").click()
-                    },800)
-
-                }else{
-                    layer.msg(res.msg,{icon:2})
-                }
-            },
-            error:function (err) {
-                console.log(err)
-            }
-        })
-
+ 
     }
     function login(){
         if($("#username").val()=='' || $("#password").val()==''){
@@ -110,28 +83,7 @@ document.querySelector('.img__btn').addEventListener('click', function() {
             return false
         }
         return true
-      /*  var role = $("input[name='role']:checked").val() 
-       location.href=$("#contextPath").val()+'/login?username='+$("#username").val()+"&password="+$("#password").val() */
-       /*  $.ajax({
-            url:$("#contextPath").val()+"/login",
-            method:'post',
-            data:{'username':$("#username").val(),'password':$("#password").val(),'role':role},
-            success:function(res){
-                 if(res.success){
-                    setTips(true,"验证成功",function(){
-                        window.location.href = "index"
-                    },800)
-
-                }else{
-                    layer.msg(res.msg,{icon:2})
-                } 
-                console.log(res)
-            },
-            error:function (err) {
-                console.log(err)
-            }
-        })  
-        */
+     
     }
 </SCRIPT>
 </html>
